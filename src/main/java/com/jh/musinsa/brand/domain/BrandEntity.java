@@ -1,5 +1,6 @@
 package com.jh.musinsa.brand.domain;
 
+import com.jh.musinsa.global.common.domain.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "brand")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class BrandEntity {
+public class BrandEntity extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
