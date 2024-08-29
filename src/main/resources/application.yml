@@ -1,4 +1,27 @@
 spring:
   application:
     name: musinsa
-
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:~/musinsa
+    # https://github.com/brettwooldridge/HikariCP
+    hikari:
+      minimum-idle: 20         # default: 10
+      maximum-pool-size: 20    # default: 10
+      connection-timeout: 3000 # default: 30000(30s)
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+    defer-datasource-initialization: true
+  sql:
+    init:
+      data-locations: classpath:sql/data.sql
