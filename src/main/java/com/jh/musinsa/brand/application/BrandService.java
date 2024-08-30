@@ -1,11 +1,12 @@
 package com.jh.musinsa.brand.application;
 
 import com.jh.musinsa.brand.domain.BrandEntity;
-import com.jh.musinsa.brand.repository.BrandRepository;
-import com.jh.musinsa.global.error.exception.BrandNotFoundException;
+import com.jh.musinsa.brand.dto.BrandRegisterRequest;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponse;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandDto;
+import com.jh.musinsa.brand.repository.BrandRepository;
+import com.jh.musinsa.global.error.exception.BrandNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,4 +31,11 @@ public class BrandService {
         return new MinTotalPriceBrandAllCategoryResponses(brandEntity.getName(), responses, brand.getTotalPrice());
     }
 
+    @Transactional
+    public Long register(BrandRegisterRequest request) {
+        final BrandEntity brand = new BrandEntity(request.getName());
+        final BrandEntity savedBrand = repository.save(brand);
+
+        return savedBrand.getId();
+    }
 }

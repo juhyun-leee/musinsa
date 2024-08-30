@@ -1,10 +1,13 @@
 package com.jh.musinsa.brand.api;
 
 import com.jh.musinsa.brand.application.BrandService;
-import com.jh.musinsa.global.common.api.ApiResult;
+import com.jh.musinsa.brand.dto.BrandRegisterRequest;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
+import com.jh.musinsa.global.common.api.ApiResult;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,4 +30,13 @@ public class BrandRestController {
         );
     }
 
+    // 구현 4) 브랜드 추가 API
+    @PostMapping
+    public ResponseEntity<ApiResult<Long>> register(
+            @RequestBody BrandRegisterRequest request) {
+
+        return ResponseEntity.ok(
+                ApiResult.ok(service.register(request))
+        );
+    }
 }

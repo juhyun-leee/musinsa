@@ -23,4 +23,8 @@ public class BrandEntity extends BaseEntity {
 
     @Column(nullable = false)
     private String name;
+
+    public BrandEntity(String name) {
+        this.name = name;
+    }
 }
