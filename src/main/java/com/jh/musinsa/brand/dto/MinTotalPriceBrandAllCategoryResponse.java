@@ -1,4 +1,4 @@
-package com.jh.musinsa.product.dto;
+package com.jh.musinsa.brand.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

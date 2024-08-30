@@ -2,8 +2,8 @@ package com.jh.musinsa.brand.repository;
 
 import com.jh.musinsa.category.domain.QCategoryEntity;
 import com.jh.musinsa.product.domain.QProductEntity;
-import com.jh.musinsa.product.dto.MinTotalPriceBrandAllCategoryResponse;
-import com.jh.musinsa.product.dto.MinTotalPriceBrandDto;
+import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponse;
+import com.jh.musinsa.brand.dto.MinTotalPriceBrandDto;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

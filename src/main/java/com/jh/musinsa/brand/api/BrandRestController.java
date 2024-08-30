@@ -2,7 +2,7 @@ package com.jh.musinsa.brand.api;
 
 import com.jh.musinsa.brand.application.BrandService;
 import com.jh.musinsa.global.common.api.ApiResult;
-import com.jh.musinsa.product.dto.MinTotalPriceBrandAllCategoryResponses;
+import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
