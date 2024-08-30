@@ -14,6 +14,10 @@ public class ApiResult<T> {
         this.error = error;
     }
 
+    public static ApiResult<Void> ok() {
+        return ok(null);
+    }
+
     public static <T> ApiResult<T> ok(T data) {
         return new ApiResult<>(true, data, null);
     }

@@ -27,4 +27,8 @@ public class BrandEntity extends BaseEntity {
     public BrandEntity(String name) {
         this.name = name;
     }
+
+    public void changeName(String name) {
+        this.name = name;
+    }
 }

@@ -32,3 +32,11 @@ Content-Type: application/json
   "name": "J"
 }
 
+
+### 4) 브랜드 업데이트 API
+PATCH http://localhost:8080/api/v1/brands/1
+Content-Type: application/json
+
+{
+  "name": "Z"
+}

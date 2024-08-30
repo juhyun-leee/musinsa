@@ -2,6 +2,7 @@ package com.jh.musinsa.brand.application;
 
 import com.jh.musinsa.brand.domain.BrandEntity;
 import com.jh.musinsa.brand.dto.BrandRegisterRequest;
+import com.jh.musinsa.brand.dto.BrandUpdateRequest;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponse;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandDto;
@@ -37,5 +38,13 @@ public class BrandService {
         final BrandEntity savedBrand = repository.save(brand);
 
         return savedBrand.getId();
+    }
+
+    @Transactional
+    public void update(Long brandId, BrandUpdateRequest request) {
+        final BrandEntity brand = repository.findById(brandId)
+                .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+
+        brand.changeName(request.getName());
     }
 }
