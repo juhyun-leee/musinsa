@@ -1,25 +1,25 @@
 -- 카테고리 초기 데이터
-INSERT INTO category (id, name, created_at)
-VALUES (1, '상의', NOW()),
-       (2, '아우터', NOW()),
-       (3, '바지', NOW()),
-       (4, '스니커즈', NOW()),
-       (5, '가방', NOW()),
-       (6, '모자', NOW()),
-       (7, '양말', NOW()),
-       (8, '액세서리', NOW());
+INSERT INTO category (name, created_at)
+VALUES ('상의', NOW()),
+       ('아우터', NOW()),
+       ('바지', NOW()),
+       ('스니커즈', NOW()),
+       ('가방', NOW()),
+       ('모자', NOW()),
+       ('양말', NOW()),
+       ('액세서리', NOW());
 
 -- 브랜드 초기 데이터
-INSERT INTO brand (id, name, created_at)
-VALUES (1, 'A', NOW()),
-       (2, 'B', NOW()),
-       (3, 'C', NOW()),
-       (4, 'D', NOW()),
-       (5, 'E', NOW()),
-       (6, 'F', NOW()),
-       (7, 'G', NOW()),
-       (8, 'H', NOW()),
-       (9, 'I', NOW());
+INSERT INTO brand (name, created_at)
+VALUES ('A', NOW()),
+       ('B', NOW()),
+       ('C', NOW()),
+       ('D', NOW()),
+       ('E', NOW()),
+       ('F', NOW()),
+       ('G', NOW()),
+       ('H', NOW()),
+       ('I', NOW());
 
 -- 상품 초기 데이터
 INSERT INTO product (brand_id, category_id, price, created_at)
