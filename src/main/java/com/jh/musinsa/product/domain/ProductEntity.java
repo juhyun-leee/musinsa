@@ -54,4 +54,8 @@ public class ProductEntity extends BaseEntity {
     public Long getId() {
         return id;
     }
+
+    public void updatePrice(long price) {
+        this.price = price;
+    }
 }

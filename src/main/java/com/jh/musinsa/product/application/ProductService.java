@@ -6,10 +6,12 @@ import com.jh.musinsa.category.domain.CategoryEntity;
 import com.jh.musinsa.category.repository.CategoryRepository;
 import com.jh.musinsa.global.error.exception.BrandNotFoundException;
 import com.jh.musinsa.global.error.exception.CategoryNotFoundException;
+import com.jh.musinsa.global.error.exception.ProductNotFoundException;
 import com.jh.musinsa.product.domain.ProductEntity;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponse;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponses;
 import com.jh.musinsa.product.dto.ProductRegisterRequest;
+import com.jh.musinsa.product.dto.ProductUpdateRequest;
 import com.jh.musinsa.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -77,5 +79,13 @@ public class ProductService {
         final ProductEntity savedProduct = repository.save(product);
 
         return savedProduct.getId();
+    }
+
+    @Transactional
+    public void update(Long productId, ProductUpdateRequest request) {
+        final ProductEntity product = repository.findById(productId)
+                .orElseThrow(() -> new ProductNotFoundException(productId + "에 해당하는 상품을 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+
+        product.updatePrice(request.getPrice());
     }
 }
