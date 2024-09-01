@@ -10,7 +10,6 @@ import com.jh.musinsa.brand.repository.BrandRepository;
 import com.jh.musinsa.global.error.exception.BrandNotFoundException;
 import com.jh.musinsa.product.application.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +26,7 @@ public class BrandService {
     public MinTotalPriceBrandAllCategoryResponses searchMinimalTotalPriceBrandAllCategory() {
         final MinTotalPriceBrandDto brand = repository.findMinimalTotalPriceBrand();
         final long brandId = brand.getBrandId();
-        final BrandEntity brandEntity = repository.findById(brandId)
-                .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+        final BrandEntity brandEntity = findById(brandId);
         final List<MinTotalPriceBrandAllCategoryResponse> responses = repository.findMinimalTotalPriceBrandAllCategory(brandId);
 
         return new MinTotalPriceBrandAllCategoryResponses(brandEntity.getName(), responses, brand.getTotalPrice());
@@ -44,8 +42,7 @@ public class BrandService {
 
     @Transactional
     public void update(Long brandId, BrandUpdateRequest request) {
-        final BrandEntity brand = repository.findById(brandId)
-                .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+        final BrandEntity brand = findById(brandId);
 
         brand.changeName(request.getName());
     }
@@ -55,5 +52,10 @@ public class BrandService {
         productService.deleteByBrandId(brandId);
 
         repository.deleteById(brandId);
+    }
+
+    private BrandEntity findById(long brandId) {
+        return repository.findById(brandId)
+                .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드가 존재하지 않습니다."));
     }
 }

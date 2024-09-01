@@ -14,7 +14,6 @@ import com.jh.musinsa.product.dto.ProductRegisterRequest;
 import com.jh.musinsa.product.dto.ProductUpdateRequest;
 import com.jh.musinsa.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -70,10 +69,10 @@ public class ProductService {
     @Transactional
     public Long register(ProductRegisterRequest request) {
         final BrandEntity brand = brandRepository.findById(request.getBrandId())
-                .orElseThrow(() -> new BrandNotFoundException(request.getBrandId() + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new BrandNotFoundException(request.getBrandId() + "에 해당하는 브랜드가 존재하지 않습니다."));
 
         final CategoryEntity category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new CategoryNotFoundException(request.getCategoryId() + "에 해당하는 카테고리를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new CategoryNotFoundException(request.getCategoryId() + "에 해당하는 카테고리가 존재하지 않습니다."));
 
         final ProductEntity product = new ProductEntity(request.getPrice(), brand, category);
         final ProductEntity savedProduct = repository.save(product);
@@ -84,7 +83,7 @@ public class ProductService {
     @Transactional
     public void update(Long productId, ProductUpdateRequest request) {
         final ProductEntity product = repository.findById(productId)
-                .orElseThrow(() -> new ProductNotFoundException(productId + "에 해당하는 상품을 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+                .orElseThrow(() -> new ProductNotFoundException(productId + "에 해당하는 상품이 존재하지 않습니다."));
 
         product.updatePrice(request.getPrice());
     }
