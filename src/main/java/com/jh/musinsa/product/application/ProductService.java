@@ -50,4 +50,10 @@ public class ProductService {
     private long calculateProductSum(List<MinimumPriceByCategoryResponse> duplicatedResponses) {
         return duplicatedResponses.stream().mapToLong(MinimumPriceByCategoryResponse::getPrice).sum();
     }
+
+    @Transactional
+    public void deleteByBrandId(Long brandId) {
+        repository.deleteByBrandId(brandId);
+    }
+
 }

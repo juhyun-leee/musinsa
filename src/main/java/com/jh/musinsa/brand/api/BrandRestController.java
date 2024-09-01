@@ -6,6 +6,7 @@ import com.jh.musinsa.brand.dto.BrandUpdateRequest;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.global.common.api.ApiResult;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,16 @@ public class BrandRestController {
             @PathVariable Long brandId,
             @RequestBody BrandUpdateRequest request) {
         service.update(brandId, request);
+
+        return ResponseEntity.ok(
+                ApiResult.ok()
+        );
+    }
+
+    // 구현 4) 브랜드 삭제 API
+    @DeleteMapping("/{brandId}")
+    public ResponseEntity<ApiResult<Void>> delete(@PathVariable Long brandId) {
+        service.delete(brandId);
 
         return ResponseEntity.ok(
                 ApiResult.ok()

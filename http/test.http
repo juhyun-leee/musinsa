@@ -40,3 +40,8 @@ Content-Type: application/json
 {
   "name": "Z"
 }
+
+
+### 4) 브랜드 삭제 API
+DELETE http://localhost:8080/api/v1/brands/1
+Content-Type: application/json

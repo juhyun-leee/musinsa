@@ -8,6 +8,7 @@ import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandDto;
 import com.jh.musinsa.brand.repository.BrandRepository;
 import com.jh.musinsa.global.error.exception.BrandNotFoundException;
+import com.jh.musinsa.product.application.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class BrandService {
 
+    private final ProductService productService;
     private final BrandRepository repository;
 
     public MinTotalPriceBrandAllCategoryResponses searchMinimalTotalPriceBrandAllCategory() {
@@ -46,5 +48,12 @@ public class BrandService {
                 .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
 
         brand.changeName(request.getName());
+    }
+
+    @Transactional
+    public void delete(Long brandId) {
+        productService.deleteByBrandId(brandId);
+
+        repository.deleteById(brandId);
     }
 }
