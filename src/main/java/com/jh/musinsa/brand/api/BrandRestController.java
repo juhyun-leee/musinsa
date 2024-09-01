@@ -6,6 +6,7 @@ import com.jh.musinsa.brand.dto.BrandUpdateRequest;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.global.common.api.ApiResult;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,7 +38,7 @@ public class BrandRestController {
     // 구현 4) 브랜드 추가 API
     @PostMapping
     public ResponseEntity<ApiResult<Long>> register(
-            @RequestBody BrandRegisterRequest request) {
+            @RequestBody @Validated BrandRegisterRequest request) {
 
         return ResponseEntity.ok(
                 ApiResult.ok(service.register(request))
@@ -48,7 +49,7 @@ public class BrandRestController {
     @PatchMapping("/{brandId}")
     public ResponseEntity<ApiResult<Void>> update(
             @PathVariable Long brandId,
-            @RequestBody BrandUpdateRequest request) {
+            @RequestBody @Validated BrandUpdateRequest request) {
         service.update(brandId, request);
 
         return ResponseEntity.ok(

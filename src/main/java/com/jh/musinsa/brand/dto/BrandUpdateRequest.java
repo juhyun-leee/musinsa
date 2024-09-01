@@ -1,5 +1,6 @@
 package com.jh.musinsa.brand.dto;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,5 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BrandUpdateRequest {
+
+    @NotNull(message = "이름은 필수값입니다.")
     private String name;
 }

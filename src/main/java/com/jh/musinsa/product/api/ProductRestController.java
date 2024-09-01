@@ -6,6 +6,7 @@ import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponses;
 import com.jh.musinsa.product.dto.ProductRegisterRequest;
 import com.jh.musinsa.product.dto.ProductUpdateRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -37,7 +38,7 @@ public class ProductRestController {
     // 구현 4) 상품 추가 API
     @PostMapping
     public ResponseEntity<ApiResult<Long>> register(
-            @RequestBody ProductRegisterRequest request) {
+            @RequestBody @Validated ProductRegisterRequest request) {
 
         return ResponseEntity.ok(
                 ApiResult.ok(service.register(request))
@@ -48,7 +49,7 @@ public class ProductRestController {
     @PatchMapping("/{productId}")
     public ResponseEntity<ApiResult<Void>> update(
             @PathVariable Long productId,
-            @RequestBody ProductUpdateRequest request) {
+            @RequestBody @Validated ProductUpdateRequest request) {
         service.update(productId, request);
 
         return ResponseEntity.ok(
