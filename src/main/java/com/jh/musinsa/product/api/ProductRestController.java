@@ -3,8 +3,11 @@ package com.jh.musinsa.product.api;
 import com.jh.musinsa.product.application.ProductService;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponses;
 import com.jh.musinsa.global.common.api.ApiResult;
+import com.jh.musinsa.product.dto.ProductRegisterRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,4 +29,15 @@ public class ProductRestController {
                 ApiResult.ok(service.searchMinimalPriceByCategory())
         );
     }
+
+    // 구현 4) 상품 추가 API
+    @PostMapping
+    public ResponseEntity<ApiResult<Long>> register(
+            @RequestBody ProductRegisterRequest request) {
+
+        return ResponseEntity.ok(
+                ApiResult.ok(service.register(request))
+        );
+    }
+
 }

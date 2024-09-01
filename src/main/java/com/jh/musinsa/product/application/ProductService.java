@@ -1,8 +1,18 @@
 package com.jh.musinsa.product.application;
 
+import com.jh.musinsa.brand.domain.BrandEntity;
+import com.jh.musinsa.brand.repository.BrandRepository;
+import com.jh.musinsa.category.domain.CategoryEntity;
+import com.jh.musinsa.category.repository.CategoryRepository;
+import com.jh.musinsa.global.error.exception.BrandNotFoundException;
+import com.jh.musinsa.global.error.exception.CategoryNotFoundException;
+import com.jh.musinsa.product.domain.ProductEntity;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponse;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponses;
+import com.jh.musinsa.product.dto.ProductRegisterRequest;
 import com.jh.musinsa.product.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,14 +25,13 @@ import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toCollection;
 
 @Service
+@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class ProductService {
 
     private final ProductRepository repository;
-
-    public ProductService(ProductRepository repository) {
-        this.repository = repository;
-    }
+    private final BrandRepository brandRepository;
+    private final CategoryRepository categoryRepository;
 
     public MinimumPriceByCategoryResponses searchMinimalPriceByCategory() {
         final List<MinimumPriceByCategoryResponse> responses = repository.searchMinimalPriceByCategory();
@@ -56,4 +65,17 @@ public class ProductService {
         repository.deleteByBrandId(brandId);
     }
 
+    @Transactional
+    public Long register(ProductRegisterRequest request) {
+        final BrandEntity brand = brandRepository.findById(request.getBrandId())
+                .orElseThrow(() -> new BrandNotFoundException(request.getBrandId() + "에 해당하는 브랜드를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+
+        final CategoryEntity category = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new CategoryNotFoundException(request.getCategoryId() + "에 해당하는 카테고리를 찾을 수 없습니다.", HttpStatus.NOT_FOUND));
+
+        final ProductEntity product = new ProductEntity(request.getPrice(), brand, category);
+        final ProductEntity savedProduct = repository.save(product);
+
+        return savedProduct.getId();
+    }
 }

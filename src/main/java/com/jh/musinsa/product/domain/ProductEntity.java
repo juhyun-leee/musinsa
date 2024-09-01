@@ -13,6 +13,7 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -21,6 +22,9 @@ import lombok.NoArgsConstructor;
         name = "product",
         indexes = {
                 @Index(name = "idx_category_price", columnList = "category_id, price")
+        },
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"brand_id", "category_id"})
         }
 )
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -40,4 +44,14 @@ public class ProductEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private CategoryEntity category;
+
+    public ProductEntity(long price, BrandEntity brand, CategoryEntity category) {
+        this.price = price;
+        this.brand = brand;
+        this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
 }
