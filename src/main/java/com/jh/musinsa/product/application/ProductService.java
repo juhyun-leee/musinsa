@@ -88,4 +88,9 @@ public class ProductService {
 
         product.updatePrice(request.getPrice());
     }
+
+    @Transactional
+    public void delete(Long productId) {
+        repository.deleteById(productId);
+    }
 }

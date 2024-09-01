@@ -65,3 +65,8 @@ Content-Type: application/json
 {
   "price": 20000
 }
+
+
+### 4) 상품 삭제 API
+DELETE http://localhost:8080/api/v1/products/2
+Content-Type: application/json

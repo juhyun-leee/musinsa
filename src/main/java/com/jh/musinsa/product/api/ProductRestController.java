@@ -6,6 +6,7 @@ import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponses;
 import com.jh.musinsa.product.dto.ProductRegisterRequest;
 import com.jh.musinsa.product.dto.ProductUpdateRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,6 +50,16 @@ public class ProductRestController {
             @PathVariable Long productId,
             @RequestBody ProductUpdateRequest request) {
         service.update(productId, request);
+
+        return ResponseEntity.ok(
+                ApiResult.ok()
+        );
+    }
+
+    // 구현 4) 상품 삭제 API
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<ApiResult<Void>> delete(@PathVariable Long productId) {
+        service.delete(productId);
 
         return ResponseEntity.ok(
                 ApiResult.ok()
