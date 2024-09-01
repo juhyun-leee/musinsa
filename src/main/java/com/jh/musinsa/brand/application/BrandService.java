@@ -54,7 +54,7 @@ public class BrandService {
         repository.deleteById(brandId);
     }
 
-    private BrandEntity findById(long brandId) {
+    public BrandEntity findById(long brandId) {
         return repository.findById(brandId)
                 .orElseThrow(() -> new BrandNotFoundException(brandId + "에 해당하는 브랜드가 존재하지 않습니다."));
     }
