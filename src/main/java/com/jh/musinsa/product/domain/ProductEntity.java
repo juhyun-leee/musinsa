@@ -55,6 +55,10 @@ public class ProductEntity extends BaseEntity {
         return id;
     }
 
+    public long getPrice() {
+        return price;
+    }
+
     public void updatePrice(long price) {
         this.price = price;
     }
