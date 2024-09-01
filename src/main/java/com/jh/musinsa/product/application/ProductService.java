@@ -1,11 +1,9 @@
 package com.jh.musinsa.product.application;
 
+import com.jh.musinsa.brand.application.BrandService;
 import com.jh.musinsa.brand.domain.BrandEntity;
-import com.jh.musinsa.brand.repository.BrandRepository;
+import com.jh.musinsa.category.application.CategoryService;
 import com.jh.musinsa.category.domain.CategoryEntity;
-import com.jh.musinsa.category.repository.CategoryRepository;
-import com.jh.musinsa.global.error.exception.BrandNotFoundException;
-import com.jh.musinsa.global.error.exception.CategoryNotFoundException;
 import com.jh.musinsa.global.error.exception.ProductNotFoundException;
 import com.jh.musinsa.product.domain.ProductEntity;
 import com.jh.musinsa.product.dto.MinimumPriceByCategoryResponse;
@@ -30,16 +28,16 @@ import static java.util.stream.Collectors.toCollection;
 @Transactional(readOnly = true)
 public class ProductService {
 
+    private final BrandService brandService;
+    private final CategoryService categoryService;
     private final ProductRepository repository;
-    private final BrandRepository brandRepository;
-    private final CategoryRepository categoryRepository;
 
     public MinimumPriceByCategoryResponses searchMinimalPriceByCategory() {
-        final List<MinimumPriceByCategoryResponse> responses = repository.searchMinimalPriceByCategory();
-        final List<MinimumPriceByCategoryResponse> duplicatedResponses = removeDuplicateCategory(responses);
-        final long sum = calculateProductSum(duplicatedResponses);
+        final List<MinimumPriceByCategoryResponse> duplicatedResponses = repository.findMinimalPriceByCategory();
+        final List<MinimumPriceByCategoryResponse> responses = removeDuplicateCategory(duplicatedResponses);
+        final long sum = calculateProductSum(responses);
 
-        return new MinimumPriceByCategoryResponses(duplicatedResponses, sum);
+        return new MinimumPriceByCategoryResponses(responses, sum);
     }
 
     /**
@@ -57,8 +55,8 @@ public class ProductService {
                 );
     }
 
-    private long calculateProductSum(List<MinimumPriceByCategoryResponse> duplicatedResponses) {
-        return duplicatedResponses.stream().mapToLong(MinimumPriceByCategoryResponse::getPrice).sum();
+    private long calculateProductSum(List<MinimumPriceByCategoryResponse> responses) {
+        return responses.stream().mapToLong(MinimumPriceByCategoryResponse::getPrice).sum();
     }
 
     @Transactional
@@ -68,12 +66,8 @@ public class ProductService {
 
     @Transactional
     public Long register(ProductRegisterRequest request) {
-        final BrandEntity brand = brandRepository.findById(request.getBrandId())
-                .orElseThrow(() -> new BrandNotFoundException(request.getBrandId() + "에 해당하는 브랜드가 존재하지 않습니다."));
-
-        final CategoryEntity category = categoryRepository.findById(request.getCategoryId())
-                .orElseThrow(() -> new CategoryNotFoundException(request.getCategoryId() + "에 해당하는 카테고리가 존재하지 않습니다."));
-
+        final BrandEntity brand = brandService.findById(request.getBrandId());
+        final CategoryEntity category = categoryService.findById(request.getCategoryId());
         final ProductEntity product = new ProductEntity(request.getPrice(), brand, category);
         final ProductEntity savedProduct = repository.save(product);
 
