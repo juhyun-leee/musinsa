@@ -41,7 +41,7 @@ public class ProductRepositoryCustomImpl implements ProductRepositoryCustom {
      * @return 카테고리 별 최저 가격 브랜드명, 카테고리명, 가격
      */
     @Override
-    public List<MinimumPriceByCategoryResponse> searchMinimalPriceByCategory() {
+    public List<MinimumPriceByCategoryResponse> findMinimalPriceByCategory() {
         final JPQLQuery<Long> priceSubquery = JPAExpressions
                 .select(product.price.min())
                 .from(product)

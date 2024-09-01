@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ProductRepositoryCustom {
 
-    List<MinimumPriceByCategoryResponse> searchMinimalPriceByCategory();
+    List<MinimumPriceByCategoryResponse> findMinimalPriceByCategory();
 }
