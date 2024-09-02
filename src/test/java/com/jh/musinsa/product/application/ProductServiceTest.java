@@ -14,7 +14,7 @@ class ProductServiceTest {
     private final ProductService service = new ProductService(facadeService);
 
     @Test
-    void 상품을_정상적으로_등록한다() {
+    void 상품을_정상적으로_추가한다() {
         final var request = new ProductRegisterRequest();
 
         service.register(request);
