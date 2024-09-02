@@ -8,7 +8,7 @@ import com.jh.musinsa.brand.dto.MinTotalPriceBrandAllCategoryResponses;
 import com.jh.musinsa.brand.dto.MinTotalPriceBrandDto;
 import com.jh.musinsa.brand.repository.BrandRepository;
 import com.jh.musinsa.global.error.exception.BrandNotFoundException;
-import com.jh.musinsa.product.application.ProductService;
+import com.jh.musinsa.product.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +20,8 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class BrandService {
 
-    private final ProductService productService;
     private final BrandRepository repository;
+    private final ProductRepository productRepository;
 
     public MinTotalPriceBrandAllCategoryResponses searchMinimalTotalPriceBrandAllCategory() {
         final MinTotalPriceBrandDto brand = repository.findMinimalTotalPriceBrand();
@@ -49,7 +49,7 @@ public class BrandService {
 
     @Transactional
     public void delete(Long brandId) {
-        productService.deleteByBrandId(brandId);
+        productRepository.deleteByBrandId(brandId);
 
         repository.deleteById(brandId);
     }
