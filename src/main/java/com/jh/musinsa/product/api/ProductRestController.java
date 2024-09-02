@@ -27,7 +27,7 @@ public class ProductRestController {
     }
 
     // 구현 1) 카테고리 별 최저가격 브랜드와 상품 가격, 총액을 조회하는 API
-    @GetMapping("/categories/min-prices")
+    @GetMapping("/categories/lowest-prices")
     public ResponseEntity<ApiResult<MinimumPriceByCategoryResponses>> searchMinimalPriceByCategory() {
 
         return ResponseEntity.ok(
